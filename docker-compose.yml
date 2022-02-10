@@ -1,0 +1,48 @@
+version: '3.7'
+services:
+  backend:
+    build:
+      context: ./laravel-back-app
+      dockerfile: Dockerfile
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: larvue
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    depends_on:
+      - db
+    ports:
+      - 8000:8000
+    volumes:
+      - ./laravel-back-app:/app/laravel-back-app
+    networks:
+      - app
+
+  frontend:
+    build:
+      context: ./vue-front-app
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./vue-front-app:/var/www/
+      - /var/www/node_modules
+    command: "npm run serve"
+    depends_on:
+      - backend
+    networks:
+      - app
+
+  db:
+    image: mysql:5.7.22
+    environment:
+      MYSQL_DATABASE: 'larvue'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    networks:
+      - app
+networks:
+  app:
+    driver: bridge

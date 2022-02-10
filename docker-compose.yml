@@ -29,7 +29,6 @@ services:
     volumes:
       - ./vue-front-app:/var/www/
       - /var/www/node_modules
-    command: "npm run serve"
     depends_on:
       - backend
     networks:

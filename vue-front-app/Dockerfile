@@ -7,5 +7,4 @@ COPY package.json ./
 RUN npm install
 
 COPY . .
-
-CMD npm run watch -- --watch-poll
+CMD ["npm run watch -- --watch-poll","npm run serve" ]

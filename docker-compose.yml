@@ -37,12 +37,18 @@ services:
 
   db:
     image: mysql:5.7.22
+    volumes:
+      - db:/var/lib/mysql
     environment:
       MYSQL_DATABASE: 'larvue'
       MYSQL_PASSWORD: 'root'
       MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+        - "33062:3306"
     networks:
       - app
 networks:
   app:
     driver: bridge
+volumes:
+  db:
